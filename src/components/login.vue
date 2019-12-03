@@ -82,14 +82,13 @@ export default {
         if (res.data.status.code === 1 && 'token' in res.data.status) {
           this.$session.start()
           this.$session.set('jwt', res.data.status.token)
-          axios.defaults.headers.common['Authorization'] =
-            'Bearer ' + res.data.status.token
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.status.token
           localStorage.setItem('username', res.data.status.detail.username)
           localStorage.setItem('photos', res.data.status.detail.photos)
           this.$eventBus.$emit('ifLogin')
           this.$router.push({ name: 'index' })
         } else {
-          alert('Username or Password failed')
+          alert('Username or Password failed' )
         }
       })
     },
