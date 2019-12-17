@@ -34,20 +34,24 @@
                   Sign Up
                 </button>
               </router-link>
-              <div class="loginSocial" @click="isLogin()">
-                <!-- <a href="http://localhost:9000/auth/facebook"> -->
-                  <i 
+              <div class="loginSocial">
+                <div @click="OauthFb()">
+                  <!-- <a href="http://localhost:9000/auth/facebook/check"> -->
+                  <i
                     class="fa fa-facebook-square"
                     style="font-size:34px; margin-right: 5px;"
-                  ></i
-                >
-                <!-- </a> -->
-                <a href="#">
-                  <i
-                    class="fa fa-google-plus-square"
-                    style="font-size:34px"
-                  ></i>
-                </a>
+                  >
+                  </i>
+                  <!-- </a> -->
+                </div>
+                <div>
+                  <a href="#">
+                    <i
+                      class="fa fa-google-plus-square"
+                      style="font-size:34px"
+                    ></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -69,6 +73,9 @@ export default {
     }
   },
   created() {},
+  mounted() {
+    // this.OauthFb()
+  },
   methods: {
     login() {
       let uri = 'http://localhost:9000/user/signin'
@@ -77,7 +84,7 @@ export default {
         password: this.password,
       }
       this.axios.post(uri, user).then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         console.log('res.data.status :', res.data)
         if (res.data.status.code === 1 && 'token' in res.data.status) {
           this.$session.start()
@@ -88,30 +95,31 @@ export default {
           this.$eventBus.$emit('ifLogin')
           this.$router.push({ name: 'index' })
         } else {
-          alert('Username or Password failed' )
+          alert('Username or Password failed')
         }
+        console.log(
+          'res.data.status.detail.username :',res.data.status.detail.username,
+        )
+        console.log(
+          'res.data.status.detail.photos :',res.data.status.detail.photos,
+        )
       })
     },
-    islogin() {
-      this.$eventBus.$emit('ifLogin')
-  }
+    OauthFb() {
+      this.axios
+        .get('http://localhost:9000/auth/facebook/', {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then(response => {
+          this.$eventBus.$emit('ifLogin')
+          console.log(response.data)
+        })
+    },
   },
 }
 </script>
 
 <style scoped>
-/* .container {
-  
-} */
-
-/* .login {
-  background-image: url('../assets/background.jpg');
-  background-repeat: round;
-  position: absolute;
-  padding: 3rem 10rem 3rem 10rem;
-  /* margin-left: 150px; */
-/* }  */
-
 .loginSocial {
   margin-top: 20px;
 }

@@ -5,7 +5,7 @@ import chat from '../components/chat.vue'
 import profile from '../components/profile'
 import login from '../components/login.vue'
 import index from '../components/index.vue'
-
+import showapi from '../components/showapi'
 
 Vue.use(VueRouter)
 
@@ -36,6 +36,11 @@ export default new VueRouter({
       path: '/chat',
       name: 'chat',
       component: chat
+    },
+    {
+      path: '/showapi',
+      name: 'showapi',
+      component: showapi
     }
   ]
 })

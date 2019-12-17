@@ -17,7 +17,7 @@
               placeholder="password"
             />
           </div>
-          <div @click="create()">
+          <div @click="signUp()">
             <button
               style="height: 28px;width: 172px;margin-top: 3px;/* margin-left: 26px; */"
             >
@@ -51,7 +51,7 @@ export default {
     }
   },
   methods: {
-    create() {
+    signUp() {
       if (this.username.length < 3 || this.password.length < 3)
         alert('Please input minimum 3 charector')
       else {
